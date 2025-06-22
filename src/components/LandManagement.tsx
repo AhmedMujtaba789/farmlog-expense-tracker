@@ -41,7 +41,7 @@ const LandManagement = () => {
         name: formData.name,
         location: formData.location,
         area: parseFloat(formData.area),
-        farmerId: formData.farmerId || undefined,
+        farmerId: formData.farmerId === 'none' ? undefined : formData.farmerId,
       });
       
       toast({
@@ -127,12 +127,12 @@ const LandManagement = () => {
               </div>
               <div>
                 <Label htmlFor="farmer">Assign Farmer (Optional)</Label>
-                <Select value={formData.farmerId} onValueChange={(value) => setFormData({ ...formData, farmerId: value })}>
+                <Select value={formData.farmerId || 'none'} onValueChange={(value) => setFormData({ ...formData, farmerId: value })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a farmer" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">No farmer assigned</SelectItem>
+                    <SelectItem value="none">No farmer assigned</SelectItem>
                     {farmers.map((farmer) => (
                       <SelectItem key={farmer.id} value={farmer.id}>
                         {farmer.name}
